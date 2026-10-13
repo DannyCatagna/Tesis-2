@@ -197,14 +197,24 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
                     {guide.theoreticalFoundation}
                   </p>
 
-                  <div className="pt-4 mt-4 border-t border-slate-200/60 flex items-center justify-between">
-                    <button
-                      onClick={() => onOpenGuideModal(guide.id)}
-                      className="text-xs font-bold text-slate-900 hover:text-[#b45309] flex items-center gap-1 transition-colors"
-                    >
-                      <FileText className="w-3.5 h-3.5" />
-                      Ver Hoja y Procedimiento
-                    </button>
+                  <div className="pt-4 mt-4 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => onOpenGuideModal(guide.id)}
+                        className="text-xs font-bold text-slate-900 hover:text-[#b45309] flex items-center gap-1 transition-colors"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        Ver Hoja
+                      </button>
+                      <span className="text-slate-300">·</span>
+                      <button
+                        onClick={() => onOpenGuideModal(guide.id)}
+                        className="text-xs font-bold text-[#b45309] hover:underline flex items-center gap-1"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Revisar con IA
+                      </button>
+                    </div>
 
                     <button
                       onClick={() => onToggleGuideComplete(guide.id)}
