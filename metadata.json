@@ -1,0 +1,6 @@
+{
+  "name": "BIOSIG - Visor Pedagógico y Cartográfico del Ecuador",
+  "description": "Plataforma web educativa y WebGIS interactivo para la enseñanza constructivista de Sistemas de Información Geográfica y conservación de la biodiversidad en el Ecuador continental.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
