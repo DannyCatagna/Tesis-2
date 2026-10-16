@@ -116,36 +116,36 @@ export default function App() {
       </main>
 
       {/* FOOTER */}
-      <footer className="w-full border-t border-slate-200/60 bg-white/40 backdrop-blur-md py-6 px-4 z-10 mt-12 text-xs text-slate-600">
+      <footer className="w-full border-t border-stone-200 bg-white py-6 px-4 z-10 mt-12 text-xs text-stone-600">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-[#15803d] flex items-center justify-center text-white font-black text-xs">
+            <div className="w-6 h-6 rounded bg-[#15803d] flex items-center justify-center text-white font-bold text-xs">
               B
             </div>
-            <span className="font-bold text-slate-800">
-              BIOSIG Ecuador · Visor Pedagógico y Cartográfico
+            <span className="font-bold text-stone-900">
+              BIOSIG Ecuador · Laboratorio de Cartografía y Biogeografía Aplicada
             </span>
-            <span className="text-slate-400">·</span>
-            <span>Conservación de la Biodiversidad Continental</span>
+            <span className="text-stone-300">·</span>
+            <span className="text-stone-500">Cátedra de Conservación & WebGIS</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-[11px]">
+          <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-stone-500">
             <button 
               onClick={() => setIsIntroModalOpen(true)}
-              className="hover:text-slate-900 hover:underline"
+              className="hover:text-stone-900 hover:underline"
             >
-              Marco Geodésico SIRGAS WGS84
+              MARCO SIRGAS WGS84
             </button>
-            <span className="text-slate-300">·</span>
+            <span className="text-stone-300">·</span>
             <button 
               onClick={() => setActiveTab(4)}
-              className="hover:text-slate-900 hover:underline"
+              className="hover:text-stone-900 hover:underline"
             >
-              Normas APA 7.ª ed.
+              NORMAS APA 7.ª ED.
             </button>
-            <span className="text-slate-300">·</span>
-            <span className="text-slate-500">
-              Derechos de la Naturaleza (Constitución 2008 & COA)
+            <span className="text-stone-300">·</span>
+            <span>
+              DERECHOS DE LA NATURALEZA (ARTS. 71-74 CE & COA)
             </span>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { InteractiveMap } from './InteractiveMap';
+import { Thematic3DViewer, Thematic3DType } from './Thematic3DViewer';
 import { PROTECTED_AREAS } from '../data/protectedAreas';
 import { CategoryType } from '../types';
-import { Trees, Compass, Filter, Sparkles, MapPin, Layers, Info } from 'lucide-react';
+import { Trees, Compass, Filter, Sparkles, MapPin, Layers, Info, Mountain, Eye } from 'lucide-react';
 
 interface TabMapaProps {
   selectedAreaId: string;
@@ -14,6 +15,20 @@ export const TabMapa: React.FC<TabMapaProps> = ({
   onSelectArea,
 }) => {
   const [activeCategoryTab, setActiveCategoryTab] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d');
+
+  const get3DThemeForArea = (areaId: string): Thematic3DType => {
+    if (areaId.includes('yasuni') || areaId.includes('cuyabeno') || areaId.includes('limoncocha') || areaId.includes('sumaco')) {
+      return 'yasuni-amazon';
+    }
+    if (areaId.includes('churute') || areaId.includes('machalilla') || areaId.includes('pacoche') || areaId.includes('cayapas') || areaId.includes('mache')) {
+      return 'mangrove-churute';
+    }
+    if (areaId.includes('cotopaxi') || areaId.includes('chimborazo') || areaId.includes('cayambe') || areaId.includes('antisana') || areaId.includes('sangay') || areaId.includes('pululahua')) {
+      return 'cotopaxi-buffer';
+    }
+    return 'relief-podocarpus';
+  };
 
   const categoryOptions = [
     { label: 'Todas las Áreas (78)', value: 'all' },
@@ -51,12 +66,40 @@ export const TabMapa: React.FC<TabMapaProps> = ({
           </p>
         </div>
 
-        <div className="p-3 rounded-2xl bg-white/70 border border-slate-200 text-xs text-slate-600 shrink-0">
-          <div className="flex items-center gap-1.5 font-bold text-[#15803d]">
-            <Compass className="w-4 h-4" /> Proyección Geodésica
+        <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 shrink-0">
+          {/* 2D vs 3D View Toggle */}
+          <div className="p-1 rounded-xl bg-white/80 border border-slate-200 flex items-center gap-1 shadow-sm">
+            <button
+              onClick={() => setViewMode('2d')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                viewMode === '2d'
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              Satelital 2D (Esri)
+            </button>
+            <button
+              onClick={() => setViewMode('3d')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+                viewMode === '3d'
+                  ? 'bg-[#0369a1] text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Mountain className="w-3.5 h-3.5" />
+              Modelo 3D (WebGL)
+            </button>
           </div>
-          <div className="mt-0.5">WGS84 UTM 17S / 18S</div>
-          <div className="text-[10px] text-slate-400 mt-0.5">Ecuador Continental</div>
+
+          <div className="p-3 rounded-2xl bg-white/70 border border-slate-200 text-xs text-slate-600">
+            <div className="flex items-center gap-1.5 font-bold text-[#15803d]">
+              <Compass className="w-4 h-4" /> Proyección Geodésica
+            </div>
+            <div className="mt-0.5">WGS84 UTM 17S / 18S</div>
+            <div className="text-[10px] text-slate-400 mt-0.5">Ecuador Continental</div>
+          </div>
         </div>
       </div>
 
@@ -108,11 +151,39 @@ export const TabMapa: React.FC<TabMapaProps> = ({
         )}
       </div>
 
-      {/* INTERACTIVE LEAFLET MAP CANVAS & LIQUID GLASS FICHA */}
-      <InteractiveMap 
-        selectedAreaId={selectedAreaId}
-        onSelectArea={onSelectArea}
-      />
+      {/* INTERACTIVE LEAFLET MAP CANVAS OR 3D WEBGL VIEWER */}
+      {viewMode === '2d' ? (
+        <InteractiveMap 
+          selectedAreaId={selectedAreaId}
+          onSelectArea={onSelectArea}
+        />
+      ) : (
+        <div className="space-y-4">
+          <div className="liquid-glass rounded-2xl p-4 border border-white/80 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                ELEVACIÓN Y MODELADO DEL RELIEVE 3D
+              </span>
+              <h3 className="text-base font-bold text-slate-900">
+                Modelo Tridimensional del Área: {PROTECTED_AREAS.find(a => a.id === selectedAreaId)?.name}
+              </h3>
+            </div>
+            <button
+              onClick={() => setViewMode('2d')}
+              className="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold"
+            >
+              Volver a Mapa 2D
+            </button>
+          </div>
+
+          <Thematic3DViewer 
+            theme={get3DThemeForArea(selectedAreaId)}
+            title={`Relieve 3D: ${PROTECTED_AREAS.find(a => a.id === selectedAreaId)?.name || 'Área Protegida'}`}
+            subtitle={`Provincia: ${PROTECTED_AREAS.find(a => a.id === selectedAreaId)?.province} · Extensión: ${PROTECTED_AREAS.find(a => a.id === selectedAreaId)?.extensionHa?.toLocaleString('es-EC')} ha`}
+            height="560px"
+          />
+        </div>
+      )}
     </div>
   );
 };

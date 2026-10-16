@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SYLLABUS_UNITS } from '../data/syllabusUnits';
 import { DIDACTIC_GUIDES } from '../data/guides';
+import { Thematic3DViewer, Thematic3DType } from './Thematic3DViewer';
 import { 
   BookOpen, 
   Layers, 
@@ -13,7 +14,9 @@ import {
   CheckCircle, 
   ArrowRight,
   Sparkles,
-  Info
+  Info,
+  Mountain,
+  Compass
 } from 'lucide-react';
 
 interface TabPedagogicoProps {
@@ -27,6 +30,7 @@ export const TabPedagogico: React.FC<TabPedagogicoProps> = ({
 }) => {
   const [activeUnitId, setActiveUnitId] = useState<'unidad-2' | 'unidad-3'>('unidad-2');
   const [expandedTopicId, setExpandedTopicId] = useState<string>('2.1');
+  const [selected3DScene, setSelected3DScene] = useState<Thematic3DType>('relief-podocarpus');
 
   const currentUnit = SYLLABUS_UNITS.find((u) => u.id === activeUnitId) || SYLLABUS_UNITS[0];
   const unitGuides = DIDACTIC_GUIDES.filter((g) => g.unitId === activeUnitId);
@@ -35,16 +39,19 @@ export const TabPedagogico: React.FC<TabPedagogicoProps> = ({
     setExpandedTopicId(expandedTopicId === id ? '' : id);
   };
 
+  const handleSelectUnit = (unitId: 'unidad-2' | 'unidad-3') => {
+    setActiveUnitId(unitId);
+    setExpandedTopicId(unitId === 'unidad-2' ? '2.1' : '3.1');
+    setSelected3DScene(unitId === 'unidad-2' ? 'relief-podocarpus' : 'cotopaxi-buffer');
+  };
+
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* UNIT SELECTOR (SEGMENTED CONTROL TO AVOID COGNITIVE OVERLOAD) */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 liquid-glass-card rounded-2xl p-2.5 border border-white/80">
         <div className="flex items-center gap-1.5 p-1 bg-white/70 rounded-xl border border-slate-200/80">
           <button
-            onClick={() => {
-              setActiveUnitId('unidad-2');
-              setExpandedTopicId('2.1');
-            }}
+            onClick={() => handleSelectUnit('unidad-2')}
             className={`px-4 py-2.5 rounded-lg text-xs md:text-sm font-bold flex items-center gap-2 transition-all ${
               activeUnitId === 'unidad-2'
                 ? 'bg-[#15803d] text-white shadow-md'
@@ -56,10 +63,7 @@ export const TabPedagogico: React.FC<TabPedagogicoProps> = ({
           </button>
 
           <button
-            onClick={() => {
-              setActiveUnitId('unidad-3');
-              setExpandedTopicId('3.1');
-            }}
+            onClick={() => handleSelectUnit('unidad-3')}
             className={`px-4 py-2.5 rounded-lg text-xs md:text-sm font-bold flex items-center gap-2 transition-all ${
               activeUnitId === 'unidad-3'
                 ? 'bg-[#0369a1] text-white shadow-md'
@@ -307,6 +311,79 @@ export const TabPedagogico: React.FC<TabPedagogicoProps> = ({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* 3D THEMATIC VIEWER SECTION ACCORDING TO CURRENT UNIT */}
+      <div className="liquid-glass rounded-3xl p-6 md:p-8 border border-white/90 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-0.5">
+              <span className="font-bold text-slate-900 uppercase">MODELADO GEOESPACIAL TRIDIMENSIONAL</span>
+              <span>·</span>
+              <span>{activeUnitId === 'unidad-2' ? 'Gradiente Andino y Amazonía' : 'SNAP y Zonas de Amortiguamiento'}</span>
+            </div>
+            <h3 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2">
+              <Mountain className="w-5 h-5 text-[#0369a1]" />
+              Explorador de Escenas 3D del Territorio Ecuatoriano
+            </h3>
+          </div>
+
+          {/* Scene Switcher buttons */}
+          <div className="flex flex-wrap items-center gap-1.5 bg-white/80 p-1.5 rounded-xl border border-slate-200 shadow-sm">
+            {activeUnitId === 'unidad-2' ? (
+              <>
+                <button
+                  onClick={() => setSelected3DScene('relief-podocarpus')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    selected3DScene === 'relief-podocarpus'
+                      ? 'bg-[#15803d] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Relieve Andino (Podocarpus)
+                </button>
+                <button
+                  onClick={() => setSelected3DScene('yasuni-amazon')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    selected3DScene === 'yasuni-amazon'
+                      ? 'bg-[#b45309] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Cuenca Amazónica (Yasuní)
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setSelected3DScene('cotopaxi-buffer')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    selected3DScene === 'cotopaxi-buffer'
+                      ? 'bg-[#0369a1] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Estratovolcán & Buffers (Cotopaxi)
+                </button>
+                <button
+                  onClick={() => setSelected3DScene('mangrove-churute')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    selected3DScene === 'mangrove-churute'
+                      ? 'bg-[#15803d] text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Estuario & Manglar (Churute)
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
+        <Thematic3DViewer 
+          theme={selected3DScene}
+          height="450px"
+        />
       </div>
     </div>
   );

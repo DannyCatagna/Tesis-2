@@ -92,32 +92,37 @@ async function startServer() {
       }
 
       const prompt = `
-Actúa como un Evaluador y Docente Universitario Senior en Biología de la Conservación y Sistemas de Información Geográfica (WebGIS) para el territorio continental del Ecuador.
+Actúa como el Comité Docente y Tutor Pedagógico de la Cátedra de Tecnologías de la Información Geográfica y Educación Ambiental, en la carrera de Pedagogía de las Ciencias Experimentales: Química y Biología (5to Semestre), República del Ecuador.
 
-Tu misión es evaluar minuciosamente la siguiente entrega de un estudiante para la Hoja de Trabajo Práctica:
-- Guía N° ${guideNumber}: ${guideTitle}
-- Unidad Académica: ${unitTitle}
-- Herramienta WebGIS utilizada: ${platform}
+Esta plataforma web es una propuesta de tesis universitaria diseñada para que futuros licenciados en docencia de Química y Biología aprendan SIG sin barreras técnicas ni costos de software privativo, utilizando plataformas libres accesibles (Visor MAATE, Google Earth Web y NASA Worldview) y explicaciones constructivistas con analogías de laboratorio escolar.
 
-DATOS ENVIADOS POR EL ESTUDIANTE:
-1. Área de Estudio o Área Protegida seleccionada: "${submission.studyArea || 'No especificado'}"
-2. Parámetros Geodésicos / Datum / Coordenadas: "${submission.coordinatesOrDatum || 'No especificado'}"
+Tu misión es emitir el dictamen formal y formativo de revisión de la siguiente entrega de laboratorio de un estudiante:
+- Guía Práctica N° ${guideNumber}: ${guideTitle}
+- Unidad Temática: ${unitTitle}
+- Plataforma Geoespacial de Trabajo: ${platform}
+
+DATOS CONSIGNADOS POR EL ESTUDIANTE:
+1. Área de Estudio o Polígono Analizado: "${submission.studyArea || 'No especificado'}"
+2. Parámetros Geodésicos / Datum / Proyección: "${submission.coordinatesOrDatum || 'No especificado'}"
 3. Resumen Metodológico (Pasos ejecutados): "${submission.methodologySummary || 'No especificado'}"
 4. Especies o Amenazas Analizadas: "${submission.speciesOrThreatsAnalyzed || 'No especificado'}"
-5. Hallazgos Espaciales y Métricas (Hectáreas, buffers, elevación): "${submission.spatialFindings || 'No especificado'}"
+5. Hallazgos Espaciales y Métricas (Hectáreas, buffers, elevaciones): "${submission.spatialFindings || 'No especificado'}"
 6. Propuesta de Conservación Territorial y Marco Jurídico: "${submission.conservationProposal || 'No especificado'}"
 
-CRITERIOS OBLIGATORIOS DE LA RÚBRICA FORMATIVA:
-1. Rigor Cartográfico y Geodésico (25%): Sistema SIRGAS-Ecuador / WGS84 UTM 17S (o 18S), precisión en atributos y escalas.
-2. Interpretación Ecológica y Bioclimática (30%): Nicho ecológico, gradiente altitudinal andino o amazónico, taxa de especies y ecosistemas.
-3. Operaciones de Geoprocesamiento y Métricas (25%): Buffers, superposiciones (Intersect/Clip), cálculo de hectáreas, análisis multitemporal.
-4. Sustento Jurídico y Gobernanza (20%): Constitución de 2008 (Arts. 71-74 Derechos de la Naturaleza), Código Orgánico del Ambiente (COA), Planes de Manejo del SNAP y comunidades.
+CRITERIOS FORMATIVOS DE EVALUACIÓN:
+1. Rigor Cartográfico y Geodésico (25%): Sistema SIRGAS-Ecuador / WGS84 UTM 17S (o 18S), coordenadas, escalas y comprensión de capas.
+2. Interpretación Ecológica y Bioclimática (30%): Nichos ecológicos, pisos bioclimáticos andinos/amazónicos, fotosíntesis espectral (NDVI), adaptación de flora/fauna.
+3. Operaciones de Geoprocesamiento y Métricas (25%): Zonas buffer de amortiguamiento, cálculo de áreas en hectáreas, perfiles altimétricos.
+4. Sustento Jurídico y Transposición Didáctica (20%): Normativa ecuatoriana (Constitución 2008 Arts. 71-74 Derechos de la Naturaleza, Código Orgánico del Ambiente COA, SNAP/MAATE) y potencial de aplicación para enseñar Química y Biología en colegios.
 
-RESPONDE EXCLUSIVAMENTE CON UN OBJETO JSON VÁLIDO (sin bloques markdown de código adicionales) con la siguiente estructura:
+REGLA DE ESTILO CRÍTICA (0% APARIENCIA DE IA):
+Redacta toda la retroalimentación con el tono respetuoso, pedagógico, motivador y formal de un profesor universitario tutor de tesis. Jamás menciones frases como "como modelo de lenguaje", "IA", "inteligencia artificial" o "asistente virtual". El dictamen debe leerse como un acta de evaluación emitida por el tribunal docente de cátedra.
+
+RESPONDE EXCLUSIVAMENTE CON UN OBJETO JSON VÁLIDO (sin bloques markdown ni etiquetas adicionales):
 {
-  "overallScore": <número entre 0 y 20>,
+  "overallScore": <número entre 0 y 20 con decimales si aplica>,
   "performanceLevel": "<Inicial | En Desarrollo | Competente | Avanzado>",
-  "executiveSummary": "<comentario pedagógico constructivo y motivador de 3 a 4 oraciones>",
+  "executiveSummary": "<dictamen docente formal de 3 a 4 oraciones>",
   "rubricBreakdown": [
     {
       "criterion": "Rigor Cartográfico y Geodésico",

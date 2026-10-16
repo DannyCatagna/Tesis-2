@@ -72,6 +72,8 @@ export interface ProcedureStep {
   stepNumber: number;
   title: string;
   instruction: string;
+  conceptualRationale: string;
+  expectedVisualResult: string;
   technicalTip: string;
   toolsUsed: string[];
 }
@@ -97,7 +99,37 @@ export interface DidacticGuide {
   platformUrl: string;
   themeColor: 'paramo' | 'jungle' | 'ocean';
   estimatedTime: string;
+  didacticAnalogy?: {
+    analogyTitle: string;
+    analogyStory: string;
+    whyItMatters: string;
+  };
+  quimicaBiologiaConnection?: {
+    biologyConcepts: string[];
+    chemistryConcepts: string[];
+    classroomActivity: string;
+  };
   theoreticalFoundation: string;
+  methodologicalPrinciples: {
+    title: string;
+    explanation: string;
+    scientificCitation: string;
+  }[];
+  spatialEquations: {
+    name: string;
+    formula: string;
+    description: string;
+    variables: string;
+  }[];
+  reflectionQuestions: {
+    question: string;
+    pedagogicalGuidance: string;
+  }[];
+  commonPitfalls: {
+    pitfall: string;
+    consequence: string;
+    howToAvoid: string;
+  }[];
   sequentialSteps: ProcedureStep[];
   glossaryTerms: GlossaryItem[];
   expectedProduct: {
