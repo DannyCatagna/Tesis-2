@@ -82,7 +82,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
 
   // Review form state
   const [studyArea, setStudyArea] = useState<string>('');
-  const [coordinatesOrDatum, setCoordinatesOrDatum] = useState<string>('WGS84 UTM 17S (SIRGAS-Ecuador)');
+  const [coordinatesOrDatum, setCoordinatesOrDatum] = useState<string>('');
   const [methodologySummary, setMethodologySummary] = useState<string>('');
   const [speciesOrThreats, setSpeciesOrThreats] = useState<string>('');
   const [spatialFindings, setSpatialFindings] = useState<string>('');
@@ -112,28 +112,28 @@ export const GuideModal: React.FC<GuideModalProps> = ({
   const handleLoadSampleData = () => {
     if (guide.id === 'guia-1') {
       setStudyArea('Parque Nacional Podocarpus (Loja / Zamora Chinchipe)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / Elevación 2.400 - 3.700 msnm');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Se trazó un transecto altitudinal de 28 km desde la cuenca del río Zamora hasta los páramos del Compadre. Se superpusieron 14 registros de presencia de Podocarpus sprucei y Tremarctos ornatus exportados en formato KML.');
       setSpeciesOrThreats('Romerillo azuceno (Podocarpus sprucei), Oso de anteojos (Tremarctos ornatus) y Tapir andino (Tapirus pinchaque). Amenaza por minería aluvial en ríos limítrofes.');
       setSpatialFindings('El perfil de elevación mostró una pendiente media del 38%. Se identificaron 12.450 hectáreas de nicho ecológico óptimo en el bosque nublado, pero con un estrangulamiento de 450 metros en el corredor norte debido a pastizales.');
       setConservationProposal('Creación de una zona de amortiguamiento comunitaria bajo el Art. 71 de la Constitución y el Código Orgánico del Ambiente (COA), con incentivos de Socio Bosque para evitar la tala en las cabeceras hídricas.');
     } else if (guide.id === 'guia-2') {
       setStudyArea('Bloque 16 y Parque Nacional Yasuní (Orellana)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 18 Sur (EPSG: 32718) / Sensor MODIS Terra y VIIRS');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Análisis multitemporal de 10 años (agosto 2014 a agosto 2024) utilizando producto True Color con <15% de nubosidad y la capa Fires and Thermal Anomalies en NASA Worldview.');
       setSpeciesOrThreats('Jaguar (Panthera onca) y delfín rosado (Inia geoffrensis). Amenaza por carreteras de penetración petrolera y focos de calor por quemas agrícolas en época seca.');
       setSpatialFindings('Se documentó un avance en espina de pescado de 14.2 km a lo largo del eje vial primario, registrándose 28 anomalías térmicas en la franja limítrofe.');
       setConservationProposal('Reforzar el control de la Zona Intangible Tagaeri-Taromenane con monitoreo satelital diario y aplicación del régimen sancionatorio del COA.');
     } else if (guide.id === 'guia-3') {
       setStudyArea('Reserva Ecológica Manglares Churute (Guayas)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / Servicios WMS y WFS IDE-MAATE');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Carga de la capa oficial SNAP_2023 y superposición con el mapa de ecosistemas continentales y división cantonal de Naranjal y Guayaquil.');
       setSpeciesOrThreats('Canclón (Anhima cornuta) y Cocodrilo de la Costa (Crocodylus acutus). Presión por piscinas camaroneras ilegales.');
       setSpatialFindings('La reserva protege 49.383 ha, pero se detectó un vacío de conservación (gap) de 3.200 ha de manglar relicto adyacente que carece de protección legal formal.');
       setConservationProposal('Incorporación del polígono adyacente como Área Protegida Comunitaria bajo el subsistema del SNAP previsto en el Código Orgánico del Ambiente.');
     } else {
       setStudyArea('Zona de Amortiguamiento Parque Nacional Cotopaxi');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / OpenStreetMap & Overpass Turbo');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Cálculo de buffers concéntricos de 2 km y 5 km alrededor del polígono del parque. Extracción de capas de caminos vecinales y uso del suelo en OSM.');
       setSpeciesOrThreats('Cóndor andino (Vultur gryphus) y lobo de páramo (Lycalopex culpaeus). Conflicto por avance de ganado asilvestrado y quemas.');
       setSpatialFindings('El buffer de 2 km abarca 18.600 ha, de las cuales 34% presentan uso agropecuario activo que interrumpe el pajonal nativo.');
@@ -700,7 +700,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
                       CÁTEDRA DE BIOGEOGRAFÍA Y SIG APLICADO · REVISIÓN AUTOMATIZADA CON IA
                     </span>
                     <h3 className="text-sm md:text-base font-bold text-stone-950">
-                      Tribunal Docente: Evaluación de Hojas de Trabajo con IA y Rúbricas Oficiales
+                      Retroalimentación asistida por IA para Química y Biología
                     </h3>
                   </div>
 
@@ -713,13 +713,13 @@ export const GuideModal: React.FC<GuideModalProps> = ({
                 </div>
 
                 <p className="text-xs text-stone-600 leading-relaxed">
-                  Ingrese las métricas y cartografía elaboradas en la práctica para someter su entrega a la verificación automática de criterios espaciales, geodésicos y contraste con el repositorio de literatura científica indexada (Europe PMC / NCBI).
+                  Describe tus observaciones, explica las relaciones químicas y biológicas, cita tus fuentes y propone una actividad de aula. La retroalimentación asistida es orientativa y no exige mediciones cartográficas especializadas.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                   <div>
                     <label className="font-bold text-stone-800 block mb-1">
-                      1. Polígono o Área Protegida Analizada:
+                      1. Lugar o área protegida estudiada:
                     </label>
                     <input
                       type="text"
@@ -732,11 +732,11 @@ export const GuideModal: React.FC<GuideModalProps> = ({
 
                   <div>
                     <label className="font-bold text-stone-800 block mb-1">
-                      2. Parámetros Geodésicos / Datum / Proyección:
+                      2. Ubicación del lugar y mapa consultado:
                     </label>
                     <input
                       type="text"
-                      placeholder="Ej. WGS84 UTM 17S (SIRGAS-Ecuador) / Elevación 2.800 m"
+                      placeholder="Ej. Cotopaxi, Ecuador; mapa OpenStreetMap consultado en BIOSIG / Elevación 2.800 m"
                       value={coordinatesOrDatum}
                       onChange={(e) => setCoordinatesOrDatum(e.target.value)}
                       className="w-full bg-white rounded p-2.5 border border-stone-300 text-stone-900 focus:outline-none focus:ring-1 focus:ring-stone-600"
@@ -771,7 +771,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
 
                   <div className="md:col-span-2">
                     <label className="font-bold text-stone-800 block mb-1">
-                      5. Hallazgos Espaciales y Métricas (Hectáreas, buffers, cotas altimétricas):
+                      5. Observaciones y explicaciones sobre el ecosistema:
                     </label>
                     <textarea
                       rows={2}
@@ -814,7 +814,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
                     {isSubmittingAI ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
-                        Tribunal de IA evaluando parámetros geodésicos y contrastando literatura científica...
+                        Revisando explicaciones científicas, evidencias y propuesta educativa...
                       </>
                     ) : (
                       <>
@@ -859,7 +859,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
                     {/* Rubric Breakdown Grid */}
                     <div className="space-y-3 pt-1">
                       <h5 className="text-xs font-bold uppercase tracking-wider text-stone-900">
-                        Desglose de Desempeño por Rúbrica Oficial:
+                        Desglose de Desempeño por Rúbrica de aprendizaje:
                       </h5>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

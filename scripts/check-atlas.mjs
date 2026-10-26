@@ -77,6 +77,15 @@ try {
     const nav = page.getByRole('navigation', { name: width <= 900 ? 'Navegación móvil' : 'Navegación principal', exact: true });
     await nav.getByRole('button', { name: 'Aprender', exact: true }).click();
     await page.getByRole('button', { name: /Unidad 2: Ecuador Megadiverso/ }).waitFor();
+    if (width <= 900) await page.getByRole('button', { name: 'Abrir menú' }).click();
+    await page.getByRole('navigation', { name: width <= 900 ? 'Navegación móvil' : 'Navegación principal', exact: true }).getByRole('button', { name: 'Mi aprendizaje', exact: true }).click();
+    await page.getByRole('button', { name: 'Rúbricas de Desempeño', exact: true }).click();
+    const rubric = page.getByRole('region', { name: 'Rúbrica de aprendizaje para docentes de Química y Biología' });
+    await rubric.waitFor();
+    assert.equal(await rubric.getByRole('article').count(), 4);
+    await rubric.getByText('Ver niveles de desempeño', { exact: true }).first().click();
+    await rubric.getByText('Necesita acompañamiento para ubicar el lugar y reconocer elementos del mapa.', { exact: true }).waitFor();
+    assert.ok(!(await rubric.innerText()).includes('Rigor Cartográfico'));
     assert.deepEqual(errors, [], 'Sin errores JavaScript a ' + width);
     await context.close();
   }

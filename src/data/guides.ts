@@ -1,3 +1,4 @@
+import { LEARNING_RUBRIC } from './learningRubric';
 import { DidacticGuide } from '../types';
 
 export const DIDACTIC_GUIDES: DidacticGuide[] = [
@@ -198,48 +199,7 @@ En el Ecuador continental, la cordillera andina actúa simultáneamente como una
         'Propuesta espacial de dos corredores biológicos para mitigar la fragmentación'
       ]
     },
-    rubrics: [
-      {
-        criterion: 'Rigor Cartográfico y Proyección',
-        weight: '25%',
-        levels: {
-          inicial: 'Presenta errores en las coordenadas o deformaciones por falta de referencia geodésica.',
-          enDesarrollo: 'Georreferenciación adecuada pero omite escala gráfica, norte o nomenclatura estándar.',
-          competente: 'Cartografía completa con atributos vectoriales limpios y coordenadas correctas.',
-          avanzado: 'Excelencia técnica: metadatos ISO, simbología contrastada y jerarquía visual impecable.'
-        }
-      },
-      {
-        criterion: 'Interpretación Ecológica del Relieve',
-        weight: '30%',
-        levels: {
-          inicial: 'Menciona elevaciones sin vincularlas a las adaptaciones fisiológicas de la especie.',
-          enDesarrollo: 'Identifica los pisos térmicos pero no explica las barreras orográficas que aíslan a la población.',
-          competente: 'Analiza el gradiente altitudinal y relaciona la pendiente con la distribución del ecosistema.',
-          avanzado: 'Articula con rigor bioclimático el nicho fundamental y efectivo frente a la geomorfología andina.'
-        }
-      },
-      {
-        criterion: 'Análisis Espacial de la Fragmentación',
-        weight: '25%',
-        levels: {
-          inicial: 'No identifica parches deforestados ni calcula distancias de aislamiento.',
-          enDesarrollo: 'Señala deforestación visible pero omite el cálculo del ancho del corredor.',
-          competente: 'Mide parches y evalúa cuantitativamente la pérdida de conectividad ecológica.',
-          avanzado: 'Modela el efecto de borde y propone trazados de conectividad paisajística viables.'
-        }
-      },
-      {
-        criterion: 'Propuesta de Conservación Territorial',
-        weight: '20%',
-        levels: {
-          inicial: 'Propuestas genéricas sin sustento en los mapas analizados.',
-          enDesarrollo: 'Propuestas pertinentes pero sin coordenadas ni delimitación poligonal concreta.',
-          competente: 'Propone zonas prioritarias de restauración con ubicación geográfica justificada.',
-          avanzado: 'Diseña una propuesta de zonificación espacial aplicable a los planes de manejo del SNAP.'
-        }
-      }
-    ]
+    rubrics: LEARNING_RUBRIC
   },
   {
     id: 'guia-2',
@@ -440,48 +400,7 @@ El análisis multitemporal (Time Series Analysis) es crucial para documentar los
         'Informe técnico con recomendaciones de fiscalización para el MAATE y fiscalías ambientales'
       ]
     },
-    rubrics: [
-      {
-        criterion: 'Configuración Espectral y Selección de Imágenes',
-        weight: '25%',
-        levels: {
-          inicial: 'Usa imágenes con nubosidad severa que ocultan el terreno o bandas inadecuadas.',
-          enDesarrollo: 'Selecciona fechas correctas pero confunde nubes con reflectancia del suelo desnudo.',
-          competente: 'Configuración correcta de productos True Color y anomalías térmicas en época seca.',
-          avanzado: 'Dominio de sensores: complementa MODIS con VIIRS justificando resoluciones espacial y temporal.'
-        }
-      },
-      {
-        criterion: 'Identificación de Patrones Geográficos',
-        weight: '30%',
-        levels: {
-          inicial: 'Señala cambios sin clasificar el tipo de intervención o dinámica espacial.',
-          enDesarrollo: 'Identifica deforestación pero no la vincula con ejes viales ni actividades humanas.',
-          competente: 'Distingue con claridad patrones en espina de pescado e impactos en zonas limítrofes.',
-          avanzado: 'Diagnóstico causal profundo: analiza la sinergia entre colonización, quemas y drenaje de cuencas.'
-        }
-      },
-      {
-        criterion: 'Rigor Cuantitativo y Medición Temporal',
-        weight: '25%',
-        levels: {
-          inicial: 'No presenta estimaciones numéricas ni fechas exactas de las anomalías.',
-          enDesarrollo: 'Presenta fechas pero las estimaciones de distancia carecen de escala consistente.',
-          competente: 'Mide con precisión el avance anual del frente de degradación en kilómetros.',
-          avanzado: 'Calcula tasas de avance interanual y estima la probabilidad de impacto en reservas protegidas.'
-        }
-      },
-      {
-        criterion: 'Calidad del Boletín y Recomendaciones Técnicas',
-        weight: '20%',
-        levels: {
-          inicial: 'Reporte incompleto o sin animación visual legible.',
-          enDesarrollo: 'Animación adecuada pero recomendaciones declarativas sin viabilidad legal.',
-          competente: 'Boletín estructurado profesionalmente con recomendaciones técnicas viables.',
-          avanzado: 'Producto con estándar de fiscalización ambiental: cita normativa del COA y protocolos de alerta temprana.'
-        }
-      }
-    ]
+    rubrics: LEARNING_RUBRIC
   },
   {
     id: 'guia-3',
@@ -682,48 +601,7 @@ En contraste, los ecosistemas de tierras bajas costeras —particularmente el bo
         'Ficha técnica con enlace validado al servicio WMS/WFS institucional'
       ]
     },
-    rubrics: [
-      {
-        criterion: 'Interacción con Servicios OGC (WMS/WFS)',
-        weight: '25%',
-        levels: {
-          inicial: 'Dificultad para conectar o visualizar los servicios web espaciales oficiales.',
-          enDesarrollo: 'Visualiza el mapa WMS pero desconoce cómo acceder a los atributos del WFS.',
-          competente: 'Consume con fluidez servicios interoperables e interpreta tablas de atributos.',
-          avanzado: 'Manejo experto: documenta endpoint URL, capabilities y proyecta capas vectoriales sin fallas.'
-        }
-      },
-      {
-        criterion: 'Análisis de Jurisdicción y Gobernanza',
-        weight: '25%',
-        levels: {
-          inicial: 'No relaciona los límites protegidos con las provincias o cantones involucrados.',
-          enDesarrollo: 'Enumera provincias pero no identifica desafíos de ordenamiento territorial conjunto.',
-          competente: 'Analiza los solapamientos con divisiones político-administrativas y competencias de GAD.',
-          avanzado: 'Propone mecanismos de articulación intergubernamental bajo el Código Orgánico del Ambiente.'
-        }
-      },
-      {
-        criterion: 'Evaluación de Representatividad Ecosistémica',
-        weight: '30%',
-        levels: {
-          inicial: 'Afirma que todo el país está bien protegido sin examinar tipos de bosques.',
-          enDesarrollo: 'Menciona que faltan áreas en la Costa pero sin datos numéricos de cobertura.',
-          competente: 'Demuestra el sesgo altitudinal hacia páramos y la vulnerabilidad del bosque seco/chocoano.',
-          avanzado: 'Calcula porcentajes de cobertura por ecosistema y formula un Gap Analysis fundamentado.'
-        }
-      },
-      {
-        criterion: 'Calidad Gráfica y Síntesis Técnica',
-        weight: '20%',
-        levels: {
-          inicial: 'Entrega capturas borrosas sin rotulación ni leyenda cartográfica formal.',
-          enDesarrollo: 'Mapa legible pero con sobrecarga visual o colores poco contrastantes.',
-          competente: 'Mapa equilibrado, con diseño institucional, leyenda limpia y atributos claros.',
-          avanzado: 'Diseño cartográfico de nivel profesional con reporte ejecutivo listo para toma de decisiones.'
-        }
-      }
-    ]
+    rubrics: LEARNING_RUBRIC
   },
   {
     id: 'guia-4',
@@ -924,47 +802,6 @@ El diseño cartográfico de Zonas de Amortiguamiento (Buffer Zones) perimetrales
         'Plan de acción participativo articulado con el programa Socio Bosque y la normativa del COA'
       ]
     },
-    rubrics: [
-      {
-        criterion: 'Metodología del Geoprocesamiento Buffer',
-        weight: '25%',
-        levels: {
-          inicial: 'Traza zonas al tanteo sin dimensiones métricas definidas ni escala.',
-          enDesarrollo: 'Aplica distancias fijas pero no diferencia zonas de alta y moderada amortiguación.',
-          competente: 'Calcula con precisión las áreas de los anillos concéntricos y verifica su topología.',
-          avanzado: 'Diseña buffers variables en función de la pendiente y la presión de deforestación adyacente.'
-        }
-      },
-      {
-        criterion: 'Identificación y Diagnóstico de Conflictos',
-        weight: '30%',
-        levels: {
-          inicial: 'No reconoce las tensiones entre actividades productivas y la conservación.',
-          enDesarrollo: 'Enumera actividades humanas pero sin georreferenciarlas ni evaluar su criticidad.',
-          competente: 'Localiza con precisión los puntos de fricción espacial y categoriza sus impactos.',
-          avanzado: 'Diagnóstico integral que cruza variables biofísicas con tenencia de la tierra y derechos colectivos.'
-        }
-      },
-      {
-        criterion: 'Uso de Datos Colaborativos (OSM / VGI)',
-        weight: '20%',
-        levels: {
-          inicial: 'No logra extraer información de capas colaborativas.',
-          enDesarrollo: 'Visualiza OSM como mapa base pero no extrae ni etiqueta datos temáticos.',
-          competente: 'Aprovecha las etiquetas de OpenStreetMap para tipificar infraestructura y caminos vecinales.',
-          avanzado: 'Exporta y procesa datos vectoriales GeoJSON demostrando dominio de plataformas colaborativas.'
-        }
-      },
-      {
-        criterion: 'Viabilidad de la Propuesta Socioambiental',
-        weight: '25%',
-        levels: {
-          inicial: 'Propone soluciones prohibitivas inviables que ignoran a las comunidades residentes.',
-          enDesarrollo: 'Propone acuerdos comunitarios pero sin mecanismos de incentivo ni marco legal.',
-          competente: 'Articula la propuesta con el Código Orgánico del Ambiente y programas como Socio Bosque.',
-          avanzado: 'Estrategia de geogobernanza integral con monitoreo participativo y zonificación consensuada.'
-        }
-      }
-    ]
+    rubrics: LEARNING_RUBRIC
   }
 ];
