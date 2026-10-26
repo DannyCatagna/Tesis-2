@@ -19,7 +19,7 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     // Deterministic tiles: tests cover UI, not third-party service uptime.
-    await page.route(/basemaps\.cartocdn\.com|server\.arcgisonline\.com/, route => route.fulfill({
+    await page.route(/tile\.openstreetmap\.org/, route => route.fulfill({
       status: 200, contentType: 'image/svg+xml',
       body: '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" fill="#dfe7d6"/><path d="M0 180Q90 30 256 80M0 210Q140 80 256 120" stroke="#acbda3" fill="none"/></svg>'
     }));
@@ -38,7 +38,13 @@ try {
     await page.getByRole('button', { name: 'Descargar bitácora' }).click();
     const download = await downloadPromise;
     assert.match(download.suggestedFilename(), /pn-cotopaxi\.md$/);
-    await page.getByRole('button', { name: 'Satélite', exact: true }).click();
+    const originalHeight = await page.locator('.atlas-map-canvas').evaluate(element => element.clientHeight);
+    await page.getByRole('button', { name: 'Ampliar mapa', exact: true }).click();
+    assert.ok(await page.locator('.atlas-map-canvas').evaluate(element => element.clientHeight) > originalHeight, 'El mapa ampliado debe ofrecer más espacio');
+    await page.getByRole('button', { name: 'Reducir mapa', exact: true }).click();
+    await page.locator('.leaflet-control-attribution').getByRole('link', { name: 'OpenStreetMap', exact: true }).waitFor();
+    assert.ok(await page.locator('.leaflet-tile').first().getAttribute('src').then(src => src.startsWith('https://tile.openstreetmap.org/')), 'Usa el servidor de mapas abiertos');
+
     await page.getByRole('checkbox', { name: /Mostrar esquema orientativo/ }).check();
     await page.getByRole('textbox', { name: 'Buscar área o provincia' }).fill('noexiste123');
     await page.getByText('No hay coincidencias.', { exact: false }).waitFor();
@@ -57,9 +63,24 @@ try {
     assert.deepEqual(errors, [], 'Sin errores JavaScript a ' + width);
     await context.close();
   }
+  // A failed map must remain recoverable without losing the rest of the UI.
+  const errorPage = await browser.newPage();
+  let failTiles = true;
+  await errorPage.route(/tile\.openstreetmap\.org/, route => failTiles ? route.abort() : route.fulfill({
+    status: 200, contentType: 'image/svg+xml',
+    body: '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" fill="#dfe7d6"/></svg>'
+  }));
+  await errorPage.goto('http://127.0.0.1:4173');
+  await errorPage.getByRole('button', { name: 'Reintentar', exact: true }).waitFor();
+  await errorPage.getByRole('link', { name: 'Abrir en OpenStreetMap', exact: true }).waitFor();
+  failTiles = false;
+  await errorPage.getByRole('button', { name: 'Reintentar', exact: true }).click();
+  await errorPage.getByText('Mapa abierto · puntos de referencia educativos', { exact: true }).waitFor();
+  await errorPage.close();
   // Invalid persisted progress must not crash the application.
   const page = await browser.newPage();
   await page.addInitScript(() => localStorage.setItem('biosig_completed_guides', '{"invalid":true}'));
+  await page.route(/tile\.openstreetmap\.org/, route => route.abort());
   await page.goto('http://127.0.0.1:4173');
   await page.getByRole('heading', { name: /El territorio/ }).waitFor();
   console.log('Atlas verificado: navegación, filtros, notas, descarga y tamaños de pantalla.');
