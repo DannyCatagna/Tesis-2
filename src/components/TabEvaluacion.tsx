@@ -1,3 +1,4 @@
+import { LEARNING_RUBRIC, LEARNING_RUBRIC_TITLE, LEARNING_RUBRIC_SCOPE } from '../data/learningRubric';
 import React, { useState } from 'react';
 import { DIDACTIC_GUIDES } from '../data/guides';
 import { FORMATIVE_QUIZ } from '../data/quizData';
@@ -73,7 +74,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
   // AI Evaluation Subview State
   const [selectedGuideForAI, setSelectedGuideForAI] = useState<string>('guia-1');
   const [studyArea, setStudyArea] = useState<string>('');
-  const [coordinatesOrDatum, setCoordinatesOrDatum] = useState<string>('WGS84 UTM 17S (SIRGAS-Ecuador)');
+  const [coordinatesOrDatum, setCoordinatesOrDatum] = useState<string>('');
   const [methodologySummary, setMethodologySummary] = useState<string>('');
   const [speciesOrThreats, setSpeciesOrThreats] = useState<string>('');
   const [spatialFindings, setSpatialFindings] = useState<string>('');
@@ -117,28 +118,28 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
   const handleLoadSampleDataForSelectedGuide = (guideId: string) => {
     if (guideId === 'guia-1') {
       setStudyArea('Parque Nacional Podocarpus (Loja / Zamora Chinchipe)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / Elevación 2.400 - 3.700 msnm');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Se trazó un transecto altitudinal de 28 km desde la cuenca del río Zamora hasta los páramos del Compadre. Se superpusieron registros de presencia de Podocarpus sprucei y Tremarctos ornatus en formato KML.');
       setSpeciesOrThreats('Romerillo azuceno (Podocarpus sprucei), Oso de anteojos (Tremarctos ornatus) y Tapir andino (Tapirus pinchaque). Amenaza por minería aluvial.');
       setSpatialFindings('El perfil de elevación mostró una pendiente media del 38%. Se identificaron 12.450 hectáreas de nicho ecológico óptimo en el bosque nublado.');
       setConservationProposal('Creación de una zona de amortiguamiento comunitaria bajo el Art. 71 de la Constitución y el Código Orgánico del Ambiente (COA), con incentivos de Socio Bosque.');
     } else if (guideId === 'guia-2') {
       setStudyArea('Bloque 16 y Parque Nacional Yasuní (Orellana)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 18 Sur (EPSG: 32718) / Sensor MODIS Terra y VIIRS');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Análisis multitemporal de 10 años (agosto 2014 a agosto 2024) utilizando producto True Color y la capa Fires and Thermal Anomalies en NASA Worldview.');
       setSpeciesOrThreats('Jaguar (Panthera onca) y delfín rosado (Inia geoffrensis). Amenaza por carreteras de penetración petrolera y focos de calor por quemas.');
       setSpatialFindings('Se documentó un avance en espina de pescado de 14.2 km a lo largo del eje vial primario, registrándose 28 anomalías térmicas.');
       setConservationProposal('Reforzar el control de la Zona Intangible Tagaeri-Taromenane con monitoreo satelital diario y aplicación del régimen sancionatorio del COA.');
     } else if (guideId === 'guia-3') {
       setStudyArea('Reserva Ecológica Manglares Churute (Guayas)');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / Servicios WMS y WFS IDE-MAATE');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Carga de la capa oficial SNAP_2023 y superposición con el mapa de ecosistemas continentales y división cantonal de Naranjal.');
       setSpeciesOrThreats('Canclón (Anhima cornuta) y Cocodrilo de la Costa (Crocodylus acutus). Presión por piscinas camaroneras ilegales.');
       setSpatialFindings('La reserva protege 49.383 ha, pero se detectó un vacío de conservación (gap) de 3.200 ha de manglar relicto adyacente sin protección formal.');
       setConservationProposal('Incorporación del polígono adyacente como Área Protegida Comunitaria bajo el subsistema del SNAP previsto en el Código Orgánico del Ambiente.');
     } else {
       setStudyArea('Zona de Amortiguamiento Parque Nacional Cotopaxi');
-      setCoordinatesOrDatum('WGS84 UTM Zona 17 Sur (EPSG: 32717) / OpenStreetMap & Overpass Turbo');
+      setCoordinatesOrDatum('Ecuador; ubicación del lugar en el mapa y fuente consultada');
       setMethodologySummary('Cálculo de buffers concéntricos de 2 km y 5 km alrededor del polígono del parque. Extracción de capas de caminos vecinales y uso del suelo en OSM.');
       setSpeciesOrThreats('Cóndor andino (Vultur gryphus) y lobo de páramo (Lycalopex culpaeus). Conflicto por avance de ganado asilvestrado y quemas.');
       setSpatialFindings('El buffer de 2 km abarca 18.600 ha, de las cuales 34% presentan uso agropecuario activo que interrumpe el pajonal nativo.');
@@ -206,7 +207,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
               <span className="text-xs font-semibold text-slate-500">Evaluación de Competencias SIG</span>
             </div>
             <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
-              Seguimiento de Aprendizaje y Evaluación Espacial
+              Seguimiento del aprendizaje en Química y Biología
             </h2>
           </div>
 
@@ -284,7 +285,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
                 : 'bg-white/70 hover:bg-white text-slate-700'
             }`}
           >
-            Cuestionario Espacial Práctico
+            Cuestionario de comprensión ambiental
           </button>
 
           <button
@@ -306,7 +307,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
-                Estado de las 4 Prácticas Geográficas
+                Estado de las 4 actividades de aprendizaje
               </h3>
               <span className="text-xs text-slate-500">Persistido en almacenamiento local del navegador</span>
             </div>
@@ -441,7 +442,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed">
-              El Tribunal Docente impulsado por IA evalúa las entregas estudiantiles conforme a los 4 criterios de la rúbrica oficial (Rigor Geodésico 25%, Interpretación Biológica 30%, Geoprocesamiento 25%, Sustento Jurídico 20%), calcula la nota sobre 20 y vincula artículos científicos indexados de Europe PMC.
+              La revisión asistida por IA ofrece retroalimentación orientativa sobre lectura básica del mapa (25%), comprensión química y biológica (30%), evidencias y fuentes (25%) y propuesta educativa (20%). No sustituye la valoración del docente ni exige cartografía especializada.
             </p>
 
             {/* Quick pre-fill button */}
@@ -458,7 +459,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div>
                 <label className="font-bold text-slate-800 block mb-1">
-                  1. Polígono o Área Protegida Analizada:
+                  1. Lugar o área protegida estudiada:
                 </label>
                 <input
                   type="text"
@@ -471,11 +472,11 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
 
               <div>
                 <label className="font-bold text-slate-800 block mb-1">
-                  2. Parámetros Geodésicos / Proyección UTM:
+                  2. Ubicación del lugar y mapa consultado:
                 </label>
                 <input
                   type="text"
-                  placeholder="Ej. WGS84 UTM 17S (SIRGAS-Ecuador)"
+                  placeholder="Ej. Cotopaxi, Ecuador; mapa OpenStreetMap consultado en BIOSIG"
                   value={coordinatesOrDatum}
                   onChange={(e) => setCoordinatesOrDatum(e.target.value)}
                   className="w-full bg-white rounded-lg p-2.5 border border-slate-300 text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-600"
@@ -501,7 +502,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Describa los pasos cartográficos ejecutados..."
+                  placeholder="Explica qué observaste, qué fuentes consultaste y cómo comparaste la información..."
                   value={methodologySummary}
                   onChange={(e) => setMethodologySummary(e.target.value)}
                   className="w-full bg-white rounded-lg p-2.5 border border-slate-300 text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-600 resize-none"
@@ -510,11 +511,11 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
 
               <div className="md:col-span-2">
                 <label className="font-bold text-slate-800 block mb-1">
-                  5. Hallazgos Espaciales y Métricas (Hectáreas, Buffers, Pendientes):
+                  5. Observaciones y explicaciones sobre el ecosistema:
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Hectáreas estimadas, ancho de corredores, anomalías térmicas..."
+                  placeholder="Relaciona agua, suelo, temperatura o vegetación con los seres vivos. Indica tus fuentes..."
                   value={spatialFindings}
                   onChange={(e) => setSpatialFindings(e.target.value)}
                   className="w-full bg-white rounded-lg p-2.5 border border-slate-300 text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-600 resize-none"
@@ -523,11 +524,11 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
 
               <div className="md:col-span-2">
                 <label className="font-bold text-slate-800 block mb-1">
-                  6. Propuesta Territorial y Sustento Jurídico (COA / Constitución 2008):
+                  6. Propuesta educativa y cuidado del entorno:
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="Zonificación, acuerdos comunitarios, Art. 71 Constitución..."
+                  placeholder="Describe una actividad de aula: propósito, pasos y cómo valorar lo aprendido..."
                   value={conservationProposal}
                   onChange={(e) => setConservationProposal(e.target.value)}
                   className="w-full bg-white rounded-lg p-2.5 border border-slate-300 text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-600 resize-none"
@@ -596,7 +597,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
               {/* Rubric Breakdown Grid */}
               <div className="space-y-3">
                 <h5 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-                  Desglose por Criterio de la Rúbrica Oficial:
+                  Retroalimentación por criterio de aprendizaje:
                 </h5>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -622,7 +623,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
               {/* Strengths and Omissions */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="p-4 rounded-xl bg-white border border-slate-200 text-xs space-y-1">
-                  <span className="font-bold text-emerald-800 block text-xs">Aciertos Espaciales y Biológicos:</span>
+                  <span className="font-bold text-emerald-800 block text-xs">Aciertos en la explicación científica:</span>
                   <ul className="list-disc list-inside space-y-1 text-slate-700">
                     {aiReviewResult.scientificStrengths.map((str, idx) => (
                       <li key={idx}>{str}</li>
@@ -814,59 +815,33 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
         </div>
       )}
 
-      {/* VIEW 4: RÚBRICAS OFICIALES DE DESEMPEÑO ANALÍTICO-ESPACIAL */}
+      {/* Shared formative rubric for future Chemistry and Biology teachers. */}
       {activeSubView === 'rubricas' && (
-        <div className="liquid-glass rounded-2xl p-6 md:p-8 border border-white/80 space-y-6">
+        <section aria-labelledby="learning-rubric-title" className="liquid-glass rounded-2xl p-6 md:p-8 border border-white/80 space-y-6">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0369a1]">
-              Criterios de Evaluación por Competencias
-            </span>
-            <h3 className="text-xl font-extrabold text-slate-900 mt-1">
-              Rúbrica Institucional de Desempeño Analítico-Espacial
-            </h3>
-            <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-              Basada en estándares internacionales de educación geográfica y los reglamentos del Ministerio del Ambiente, Agua y Transición Ecológica (MAATE).
-            </p>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#0369a1]">Evaluación formativa · Química y Biología</span>
+            <h3 id="learning-rubric-title" className="text-xl font-extrabold text-slate-900 mt-1">{LEARNING_RUBRIC_TITLE}</h3>
+            <p className="text-sm text-slate-600 mt-3 leading-relaxed">{LEARNING_RUBRIC_SCOPE}</p>
+            <p className="text-sm text-slate-600 mt-2">Ponderación total: 100%. Esta propuesta orienta la retroalimentación y requiere validación docente; no constituye una rúbrica institucional aprobada.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="liquid-glass rounded-2xl p-5 border border-white/90 space-y-2">
-              <span className="text-xs font-black uppercase text-[#15803d] tracking-wider block">
-                1. Rigor Cartográfico y Geodésico (25%)
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Dominio de sistemas de referencia geocéntricos (SIRGAS-Ecuador / WGS84 UTM 17S/18S), precisión métrica en polígonos, ausencia de autointersecciones y jerarquía visual en composiciones de mapa.
-              </p>
-            </div>
-
-            <div className="liquid-glass rounded-2xl p-5 border border-white/90 space-y-2">
-              <span className="text-xs font-black uppercase text-[#0369a1] tracking-wider block">
-                2. Interpretación Ecológica y Bioclimática (30%)
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Capacidad de correlacionar perfiles altimétricos, pisos zoogeográficos y gradientes de temperatura con la delimitación real del nicho ecológico de especies amenazadas o endémicas.
-              </p>
-            </div>
-
-            <div className="liquid-glass rounded-2xl p-5 border border-white/90 space-y-2">
-              <span className="text-xs font-black uppercase text-[#b45309] tracking-wider block">
-                3. Operaciones de Geoprocesamiento y Buffers (25%)
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Aplicación correcta de análisis de superposición booleana (Overlay), cálculo numérico de hectáreas fragmentadas y zonificación concéntrica de zonas de amortiguamiento.
-              </p>
-            </div>
-
-            <div className="liquid-glass rounded-2xl p-5 border border-white/90 space-y-2">
-              <span className="text-xs font-black uppercase text-slate-800 tracking-wider block">
-                4. Sustento Jurídico y Propuesta Territorial (20%)
-              </span>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                Articulación de los diagnósticos cartográficos con los Derechos de la Naturaleza (Art. 71-74 CE), el Código Orgánico del Ambiente (COA) y la gobernanza comunitaria con pueblos ancestrales.
-              </p>
-            </div>
+            {LEARNING_RUBRIC.map((criterion, index) => (
+              <article key={criterion.criterion} className="bg-white rounded-xl p-5 border border-stone-200 space-y-3">
+                <h4 className="text-base font-bold text-[#166534]">{index + 1}. {criterion.criterion} ({criterion.weight})</h4>
+                <p className="text-sm text-slate-700 leading-relaxed">{criterion.description}</p>
+                <p className="text-sm bg-emerald-50 rounded-lg p-3 text-emerald-950"><strong>Ejemplo de evidencia:</strong> {criterion.example}</p>
+                <details className="text-sm text-slate-700">
+                  <summary className="cursor-pointer font-semibold py-2">Ver niveles de desempeño</summary>
+                  <dl className="space-y-3 mt-2">
+                    {([{ key: 'inicial', label: 'Inicial' }, { key: 'enDesarrollo', label: 'En desarrollo' }, { key: 'competente', label: 'Competente' }, { key: 'avanzado', label: 'Avanzado' }] as const).map(level => (
+                      <div key={level.key}><dt className="font-bold">{level.label}</dt><dd className="leading-relaxed">{criterion.levels[level.key]}</dd></div>
+                    ))}
+                  </dl>
+                </details>
+              </article>
+            ))}
           </div>
-        </div>
+        </section>
       )}
 
       {/* MODAL PARA GENERAR Y DESCARGAR RESUMEN EN PDF */}

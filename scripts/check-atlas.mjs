@@ -77,6 +77,15 @@ try {
     const nav = page.getByRole('navigation', { name: width <= 900 ? 'Navegación móvil' : 'Navegación principal', exact: true });
     await nav.getByRole('button', { name: 'Aprender', exact: true }).click();
     await page.getByRole('button', { name: /Unidad 2: Ecuador Megadiverso/ }).waitFor();
+    if (width <= 900) await page.getByRole('button', { name: 'Abrir menú' }).click();
+    await page.getByRole('navigation', { name: width <= 900 ? 'Navegación móvil' : 'Navegación principal', exact: true }).getByRole('button', { name: 'Mi aprendizaje', exact: true }).click();
+    await page.getByRole('button', { name: 'Rúbricas de Desempeño', exact: true }).click();
+    const rubric = page.getByRole('region', { name: 'Rúbrica de aprendizaje para docentes de Química y Biología' });
+    await rubric.waitFor();
+    assert.equal(await rubric.getByRole('article').count(), 4);
+    await rubric.getByText('Ver niveles de desempeño', { exact: true }).first().click();
+    await rubric.getByText('Necesita acompañamiento para ubicar el lugar y reconocer elementos del mapa.', { exact: true }).waitFor();
+    assert.ok(!(await rubric.innerText()).includes('Rigor Cartográfico'));
     assert.deepEqual(errors, [], 'Sin errores JavaScript a ' + width);
     await context.close();
   }
@@ -100,5 +109,26 @@ try {
   await page.route(/tile\.openstreetmap\.org/, route => route.abort());
   await page.goto('http://127.0.0.1:4173');
   await page.getByRole('heading', { name: /El territorio/ }).waitFor();
+  // Without an AI service, return an explicit unavailable response rather than a fabricated grade.
+  const reviewServer = spawn('bun', ['server.ts'], {
+    stdio: 'inherit',
+    env: { ...process.env, NODE_ENV: 'production', PORT: '4174', GEMINI_API_KEY: '' },
+  });
+  try {
+    let reviewReady = false;
+    for (let i = 0; i < 40; i++) {
+      try { if ((await fetch('http://127.0.0.1:4174')).ok) { reviewReady = true; break; } } catch {}
+      await new Promise(resolve => setTimeout(resolve, 250));
+    }
+    assert.ok(reviewReady, 'El servicio de revisión debe iniciar');
+    const response = await fetch('http://127.0.0.1:4174/api/review-guide', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guideNumber: 1, submission: { studyArea: 'Cotopaxi', methodologySummary: 'Observación del mapa' } }),
+    });
+    assert.equal(response.status, 503, 'Sin IA no debe inventarse una evaluación');
+    const payload = await response.json();
+    assert.match(payload.error, /No se ha generado una calificación/);
+    assert.equal(payload.review, undefined);
+  } finally { reviewServer.kill(); }
   console.log('Atlas verificado: navegación, filtros, notas, descarga y tamaños de pantalla.');
 } finally { await browser?.close(); server.kill(); }
