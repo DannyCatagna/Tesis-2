@@ -5,9 +5,12 @@ on:
   pull_request:
 permissions:
   contents: read
+concurrency:
+  group: atlas-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -17,11 +20,13 @@ jobs:
       - run: bun run build
       - name: Install isolated browser testing tools
         run: npm install --prefix /tmp/biosig-browser --package-lock=false playwright@1.58.2
-      - run: node /tmp/biosig-browser/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Verify preinstalled browser
+        run: google-chrome --version
       - name: Check learning journeys and responsive interface
         run: node scripts/check-atlas.mjs
         env:
           PLAYWRIGHT_MODULE: /tmp/biosig-browser/node_modules/playwright/index.mjs
+          PLAYWRIGHT_CHANNEL: chrome
       - uses: actions/upload-artifact@v4
         if: always()
         with:

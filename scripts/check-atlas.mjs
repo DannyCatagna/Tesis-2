@@ -11,7 +11,7 @@ try {
     await new Promise(resolve => setTimeout(resolve, 500));
   }
   assert.ok(ready, 'El servidor de producción debe arrancar');
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_CHANNEL ? { channel: process.env.PLAYWRIGHT_CHANNEL } : {}) });
   await mkdir('artifacts', { recursive: true });
   for (const width of [390, 820, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 960 }, acceptDownloads: true });
