@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { PROTECTED_AREAS } from '../data/protectedAreas';
-import { LocateFixed, Layers, RefreshCw } from 'lucide-react';
+import { LocateFixed, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 
 interface AtlasMapProps {
   areaId: string;
@@ -13,7 +13,7 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const selectionRef = useRef(onSelectArea);
-  const [base, setBase] = useState<'map' | 'satellite'>('map');
+  const [expanded, setExpanded] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [tileStatus, setTileStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [showSketch, setShowSketch] = useState(false);
@@ -36,16 +36,25 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
     if (!map) return;
     setTileStatus('loading');
     let failed = false;
-    const layer = base === 'satellite'
-      ? L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community', maxZoom: 18 })
-      : L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', maxZoom: 19 });
-    layer.on('loading', () => { failed = false; setTileStatus('loading'); });
+    const layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+      noWrap: true,
+      referrerPolicy: 'strict-origin-when-cross-origin',
+    });
+    let timeout: number | undefined;
+    const watchLoading = () => {
+      window.clearTimeout(timeout);
+      failed = false;
+      setTileStatus('loading');
+      timeout = window.setTimeout(() => setTileStatus('error'), 15000);
+    };
+    layer.on('loading', watchLoading);
     layer.on('tileerror', () => { failed = true; setTileStatus('error'); });
-    layer.on('load', () => { if (!failed) setTileStatus('ready'); });
+    layer.on('load', () => { window.clearTimeout(timeout); if (!failed) setTileStatus('ready'); });
     layer.addTo(map);
-    const timeout = window.setTimeout(() => setTileStatus(status => status === 'loading' ? 'error' : status), 15000);
     return () => { window.clearTimeout(timeout); layer.off(); layer.remove(); };
-  }, [base, attempt]);
+  }, [attempt]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -72,17 +81,17 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
     if (overview) mapRef.current?.setView([-1.7, -78.4], 6);
     else mapRef.current?.setView(area.coordinates, area.zoomLevel);
   };
-  return <div className={'atlas-map-frame' + (overview ? ' atlas-map-overview' : '')}>
+  return <div className={'atlas-map-frame' + (overview ? ' atlas-map-overview' : '') + (expanded ? ' atlas-map-expanded' : '')}>
     <div className="atlas-map-canvas" ref={container} aria-label="Mapa interactivo: usa los botones de zoom o arrastra para explorar" />
     <div className="atlas-map-tools" role="group" aria-label="Controles del mapa">
-      <button aria-pressed={base === 'map'} onClick={() => setBase('map')}><Layers size={15} /> Mapa</button>
-      <button aria-pressed={base === 'satellite'} onClick={() => setBase('satellite')}>Satélite</button>
+      <span className="atlas-open-map-label">OpenStreetMap</span>
+      <button aria-pressed={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}{expanded ? 'Reducir mapa' : 'Ampliar mapa'}</button>
       <button onClick={recenter} aria-label="Volver a la vista inicial del mapa" title="Centrar mapa"><LocateFixed size={17} /></button>
     </div>
     <div className="atlas-map-status" role="status">
       {tileStatus === 'loading' && 'Cargando mapa…'}
-      {tileStatus === 'ready' && (overview ? 'Puntos de referencia · catálogo educativo' : 'WGS84 · latitud y longitud en grados')}
-      {tileStatus === 'error' && <span>No se pudo cargar parte del mapa. <button onClick={() => setAttempt(value => value + 1)}><RefreshCw size={13} /> Reintentar</button></span>}
+      {tileStatus === 'ready' && (overview ? 'Mapa abierto · puntos de referencia educativos' : 'Mapa abierto · WGS84 · coordenadas en grados')}
+      {tileStatus === 'error' && <span>No se pudo cargar parte del mapa. <button onClick={() => setAttempt(value => value + 1)}><RefreshCw size={13} /> Reintentar</button> · <a href={'https://www.openstreetmap.org/#map=' + area.zoomLevel + '/' + area.coordinates[0] + '/' + area.coordinates[1]} target="_blank" rel="noopener noreferrer">Abrir en OpenStreetMap</a></span>}
     </div>
     {!overview && <label className="atlas-map-sketch"><input type="checkbox" checked={showSketch} onChange={event => setShowSketch(event.target.checked)} /> Mostrar esquema orientativo (no oficial)</label>}
   </div>;

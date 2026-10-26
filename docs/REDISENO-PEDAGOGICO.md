@@ -16,7 +16,9 @@ Observar → formular una explicación → documentar la evidencia → proponer 
 Se adoptan principios de interacción; no se copian marcas, contenidos o diseños.
 
 ## Cartografía
-- Mapas base: CARTO / OpenStreetMap y Esri World Imagery, con atribución visible.
+- Mapa base: OpenStreetMap Standard (datos abiertos ODbL), con atribución visible. Visor Leaflet de código abierto (BSD-2-Clause). Se retiraron los mapas base de Esri y CARTO.
+- Controles fuera del lienzo, ampliación de la vista y reintento con acceso directo a OpenStreetMap ante fallos de carga.
+- Servicio público de teselas: requiere conexión, respeta la caché del navegador y no implementa descargas masivas ni uso sin conexión. Política: https://operations.osmfoundation.org/policies/tiles/
 - Los puntos proceden del catálogo existente. Son ubicaciones orientativas, no presencias de especies.
 - Los polígonos existentes no cuentan con procedencia cartográfica verificable por entidad. Se ocultan inicialmente y se ofrecen únicamente como esquemas educativos, nunca como límites oficiales.
 - Web Mercator en pantalla; coordenadas geográficas WGS84 en grados.
