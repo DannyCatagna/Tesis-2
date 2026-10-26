@@ -20,7 +20,7 @@ Se adoptan principios de interacción; no se copian marcas, contenidos o diseño
 - Controles fuera del lienzo, ampliación de la vista y reintento con acceso directo a OpenStreetMap ante fallos de carga.
 - Servicio público de teselas: requiere conexión, respeta la caché del navegador y no implementa descargas masivas ni uso sin conexión. Política: https://operations.osmfoundation.org/policies/tiles/
 - Los puntos proceden del catálogo existente. Son ubicaciones orientativas, no presencias de especies.
-- Los polígonos existentes no cuentan con procedencia cartográfica verificable por entidad. Se ocultan inicialmente y se ofrecen únicamente como esquemas educativos, nunca como límites oficiales.
+- Los polígonos existentes no cuentan con procedencia cartográfica verificable por entidad. Se resalta automáticamente solo el contorno del área seleccionada, con borde discontinuo y relleno translúcido, identificado como esquema orientativo y nunca como límite oficial. Al cambiar de área se elimina la superficie anterior; el laboratorio ajusta el encuadre para mostrar el contorno completo.
 - Web Mercator en pantalla; coordenadas geográficas WGS84 en grados.
 - El modelo 3D es conceptual, no un modelo digital de elevación.
 - Errores de carga de teselas se muestran con opción de reintento. Las fichas y notas siguen disponibles.

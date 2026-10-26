@@ -16,7 +16,6 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
   const [expanded, setExpanded] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [tileStatus, setTileStatus] = useState<'loading' | 'ready' | 'error'>('loading');
-  const [showSketch, setShowSketch] = useState(false);
   const area = PROTECTED_AREAS.find(item => item.id === areaId) || PROTECTED_AREAS[0];
   selectionRef.current = onSelectArea;
 
@@ -69,17 +68,25 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
       marker.bindTooltip(tooltip);
       marker.on('click', () => selectionRef.current?.(item.id));
     });
-    if (showSketch && !overview) {
-      const outline = L.polygon(area.polygon, { color: '#be603c', weight: 2, dashArray: '6 6', fillOpacity: 0.08 }).addTo(group);
-      outline.bindTooltip('Esquema del catálogo: no es un límite oficial');
-    }
-    if (!overview) map.setView(area.coordinates, area.zoomLevel, { animate: false });
+    const outline = L.polygon(area.polygon, {
+      className: 'atlas-selected-surface',
+      color: '#166534',
+      weight: 3,
+      dashArray: '7 4',
+      fillColor: '#22c55e',
+      fillOpacity: 0.22,
+    }).addTo(group);
+    const label = document.createElement('span');
+    label.textContent = area.name + ' · contorno orientativo, no oficial';
+    outline.bindTooltip(label, { sticky: true });
+    outline.bringToBack();
+    if (!overview) map.fitBounds(outline.getBounds(), { padding: [28, 28], maxZoom: area.zoomLevel, animate: false });
     return () => { group.clearLayers(); group.remove(); };
-  }, [area, overview, showSketch]);
+  }, [area, overview]);
 
   const recenter = () => {
     if (overview) mapRef.current?.setView([-1.7, -78.4], 6);
-    else mapRef.current?.setView(area.coordinates, area.zoomLevel);
+    else mapRef.current?.fitBounds(L.latLngBounds(area.polygon), { padding: [28, 28], maxZoom: area.zoomLevel, animate: false });
   };
   return <div className={'atlas-map-frame' + (overview ? ' atlas-map-overview' : '') + (expanded ? ' atlas-map-expanded' : '')}>
     <div className="atlas-map-canvas" ref={container} aria-label="Mapa interactivo: usa los botones de zoom o arrastra para explorar" />
@@ -93,6 +100,6 @@ export const AtlasMap: React.FC<AtlasMapProps> = ({ areaId, onSelectArea, overvi
       {tileStatus === 'ready' && (overview ? 'Mapa abierto · puntos de referencia educativos' : 'Mapa abierto · WGS84 · coordenadas en grados')}
       {tileStatus === 'error' && <span>No se pudo cargar parte del mapa. <button onClick={() => setAttempt(value => value + 1)}><RefreshCw size={13} /> Reintentar</button> · <a href={'https://www.openstreetmap.org/#map=' + area.zoomLevel + '/' + area.coordinates[0] + '/' + area.coordinates[1]} target="_blank" rel="noopener noreferrer">Abrir en OpenStreetMap</a></span>}
     </div>
-    {!overview && <label className="atlas-map-sketch"><input type="checkbox" checked={showSketch} onChange={event => setShowSketch(event.target.checked)} /> Mostrar esquema orientativo (no oficial)</label>}
+    <div className="atlas-map-sketch" role="status"><span aria-hidden="true" style={{ width: 18, height: 14, flexShrink: 0, border: '2px dashed #166534', background: '#22c55e38' }} /><span><strong>{area.name}</strong> · Solo esta área está resaltada. Contorno orientativo, no oficial.</span></div>
   </div>;
 };

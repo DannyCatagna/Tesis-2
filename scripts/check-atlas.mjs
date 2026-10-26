@@ -45,7 +45,24 @@ try {
     await page.locator('.leaflet-control-attribution').getByRole('link', { name: 'OpenStreetMap', exact: true }).waitFor();
     assert.ok(await page.locator('.leaflet-tile').first().getAttribute('src').then(src => src.startsWith('https://tile.openstreetmap.org/')), 'Usa el servidor de mapas abiertos');
 
-    await page.getByRole('checkbox', { name: /Mostrar esquema orientativo/ }).check();
+    // Selection replaces the previous surface; its projected bounds fit inside the map.
+    const surface = page.locator('.atlas-selected-surface');
+    assert.equal(await surface.count(), 1, 'Solo debe existir una superficie resaltada');
+    const cotopaxiPath = await surface.getAttribute('d');
+    await page.getByRole('textbox', { name: 'Buscar área o provincia' }).fill('Yasuní');
+    await page.getByRole('button', { name: /Parque Nacional Yasuní/ }).click();
+    assert.equal(await surface.count(), 1, 'El cambio de área debe retirar el polígono anterior');
+    assert.notEqual(await surface.getAttribute('d'), cotopaxiPath, 'Debe cambiar el contorno seleccionado');
+    await page.locator('.atlas-map-sketch').getByText('Parque Nacional Yasuní', { exact: true }).waitFor();
+    assert.ok(await page.locator('.atlas-map-canvas').evaluate(container => {
+      const shape = container.querySelector('.atlas-selected-surface').getBoundingClientRect();
+      const frame = container.getBoundingClientRect();
+      return shape.left >= frame.left && shape.top >= frame.top && shape.right <= frame.right && shape.bottom <= frame.bottom;
+    }), 'La superficie completa debe caber dentro del mapa');
+    // Return to the original notebook to also verify per-area persistence.
+    await page.getByRole('textbox', { name: 'Buscar área o provincia' }).fill('Cotopaxi');
+    await page.getByRole('button', { name: /Parque Nacional Cotopaxi/ }).click();
+
     await page.getByRole('textbox', { name: 'Buscar área o provincia' }).fill('noexiste123');
     await page.getByText('No hay coincidencias.', { exact: false }).waitFor();
     await page.getByRole('button', { name: 'Restablecer filtros' }).click();
