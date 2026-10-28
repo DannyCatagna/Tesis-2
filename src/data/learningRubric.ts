@@ -15,15 +15,15 @@ export const LEARNING_RUBRIC: (RubricCriterion & { description: string; example:
     }
   },
   {
-    "criterion": "Comprensión de procesos químicos y biológicos",
+    "criterion": "Comprensión de la biodiversidad y su conservación",
     "weight": "30%",
-    "description": "Explica relaciones entre los seres vivos y factores como agua, suelo, luz o temperatura. Utiliza conceptos de Química y Biología pertinentes al caso.",
-    "example": "Explica cómo un cambio en la calidad del agua podría afectar a los organismos, sin afirmar que existe contaminación solo por observar el mapa.",
+    "description": "Explica la relación entre los seres vivos y su ambiente, reconoce amenazas a la biodiversidad y justifica por qué es importante proteger el ecosistema estudiado.",
+    "example": "Describe cómo la pérdida de vegetación podría afectar el refugio y alimento de las especies, y explica por qué conservar ese hábitat. Distingue las amenazas documentadas de las que necesitan comprobarse.",
     "levels": {
-      "inicial": "Menciona seres vivos o factores ambientales sin explicar cómo se relacionan.",
-      "enDesarrollo": "Propone relaciones sencillas, aunque confunde algunos conceptos o necesita apoyo para explicarlos.",
-      "competente": "Explica relaciones entre factores ambientales y organismos con conceptos científicos pertinentes y comprensibles.",
-      "avanzado": "Relaciona procesos químicos y biológicos, considera distintas explicaciones y señala qué datos permitirían contrastarlas."
+      "inicial": "Menciona especies o elementos del ambiente sin explicar sus relaciones ni la importancia de conservarlos.",
+      "enDesarrollo": "Reconoce algunas relaciones o amenazas, pero necesita apoyo para explicar cómo afectan a la biodiversidad.",
+      "competente": "Explica relaciones entre los seres vivos y su ambiente, identifica amenazas con apoyo de fuentes y justifica la conservación del ecosistema.",
+      "avanzado": "Relaciona las amenazas con sus posibles efectos sobre especies y hábitats, compara acciones de conservación y justifica sus propuestas reconociendo la información que falta."
     }
   },
   {

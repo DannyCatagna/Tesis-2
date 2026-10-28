@@ -713,7 +713,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({
                 </div>
 
                 <p className="text-xs text-stone-600 leading-relaxed">
-                  Describe tus observaciones, explica las relaciones químicas y biológicas, cita tus fuentes y propone una actividad de aula. La retroalimentación asistida es orientativa y no exige mediciones cartográficas especializadas.
+                  Describe tus observaciones, explica las relaciones entre los seres vivos y su ambiente y la importancia de conservarlos, cita tus fuentes y propone una actividad de aula. La retroalimentación asistida es orientativa y no exige mediciones cartográficas especializadas.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

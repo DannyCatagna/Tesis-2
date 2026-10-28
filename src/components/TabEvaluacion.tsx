@@ -442,7 +442,7 @@ export const TabEvaluacion: React.FC<TabEvaluacionProps> = ({
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed">
-              La revisión asistida por IA ofrece retroalimentación orientativa sobre lectura básica del mapa (25%), comprensión química y biológica (30%), evidencias y fuentes (25%) y propuesta educativa (20%). No sustituye la valoración del docente ni exige cartografía especializada.
+              La revisión asistida por IA ofrece retroalimentación orientativa sobre lectura básica del mapa (25%), comprensión de la biodiversidad y su conservación (30%), evidencias y fuentes (25%) y propuesta educativa (20%). No sustituye la valoración del docente ni exige cartografía especializada.
             </p>
 
             {/* Quick pre-fill button */}

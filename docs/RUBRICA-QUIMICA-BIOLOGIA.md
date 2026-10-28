@@ -2,7 +2,7 @@
 
 La evaluación usa mapas como apoyo para comprender y enseñar biodiversidad, no como formación profesional en cartografía.
 
-Criterios: lectura básica del mapa (25%), comprensión de procesos químicos y biológicos (30%), observación y fuentes (25%) y propuesta educativa (20%). Cada uno tiene ejemplos y cuatro niveles de desempeño. Los pesos se conservan; la suma es 100% y su traducción orientativa mantiene 20 puntos.
+Criterios: lectura básica del mapa (25%), comprensión de la biodiversidad y su conservación (30%), observación y fuentes (25%) y propuesta educativa (20%). Cada uno tiene ejemplos y cuatro niveles de desempeño. Los pesos se conservan; la suma es 100% y su traducción orientativa mantiene 20 puntos.
 
 src/data/learningRubric.ts es la fuente compartida de la vista de evaluación, las cuatro guías y las instrucciones del servicio de revisión. La revisión no debe exigir proyecciones, precisión de polígonos, buffers ni exportación vectorial. Es una propuesta formativa pendiente de validación docente, no una aprobación institucional.
 

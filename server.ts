@@ -111,7 +111,7 @@ CRITERIOS Y NIVELES COMUNES A LA INTERFAZ:
 ${JSON.stringify(LEARNING_RUBRIC)}
 Mantén los pesos 25%, 30%, 25% y 20%, con máximos de 5, 6, 5 y 4 puntos respectivamente; overallScore es la suma de esos cuatro puntajes sobre 20.
 Usa lenguaje claro y respetuoso de formación docente. Explica cada mejora con un ejemplo de aula o una observación científica sencilla.
-Valora conceptos pertinentes de Química y Biología, diferenciación de observaciones e hipótesis, fuentes identificables y actividades con propósito y evidencia de aprendizaje.
+Valora la comprensión de la biodiversidad y su conservación: relaciones entre seres vivos y ambiente, amenazas documentadas e importancia de proteger los ecosistemas. Valora también la diferenciación de observaciones e hipótesis, fuentes identificables y actividades con propósito y evidencia de aprendizaje. La carrera del estudiante es el contexto de formación; no exijas explicaciones de procesos químicos por pertenecer a esa carrera.
 No inventes observaciones, fuentes ni capacidades que no aparecen en la entrega. Si falta evidencia, indícalo. No afirmes que una imagen permite medir pH, contaminación o presencia de especies sin datos adicionales.
 No te presentes como tribunal ni ocultes el carácter asistido de esta revisión.
 
@@ -130,12 +130,12 @@ RESPONDE EXCLUSIVAMENTE CON UN OBJETO JSON VÁLIDO (sin bloques markdown ni etiq
       "recommendation": "<sugerencia sencilla de lectura del mapa>"
     },
     {
-      "criterion": "Comprensión de procesos químicos y biológicos",
+      "criterion": "Comprensión de la biodiversidad y su conservación",
       "weight": "30%",
       "score": <puntaje de 0 a 6>,
       "level": "<Inicial | En Desarrollo | Competente | Avanzado>",
       "feedback": "<evaluación específica>",
-      "recommendation": "<sugerencia para explicar conceptos de Química y Biología>"
+      "recommendation": "<sugerencia para explicar relaciones ecológicas, amenazas a la biodiversidad y acciones de conservación>"
     },
     {
       "criterion": "Observación, evidencias y uso de fuentes",
